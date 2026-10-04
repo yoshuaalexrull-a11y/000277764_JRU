@@ -151,5 +151,21 @@
         "file": "hardhat@3.18.1/console.sol"
       }
     }
+  },
+  "contracts/15_Complejos_Struct.sol": {
+    "__sources__": {
+      "contracts/15_Complejos_Struct.sol": {
+        "content": "// SPDX-License-Identifier: GPL-3.0\r\npragma solidity >=0.8.2 <0.9.0;\r\n\r\ncontract ComplejosStruct {\r\n\r\n    struct Alumno {\r\n        uint256 codigo;\r\n        string nombre;      \r\n        uint256 edad;         \r\n    }\r\n\r\n    Alumno[] private alumnos;\r\n\r\n    function agregarAlumno(uint256 _codigo, string memory _nombre, uint256 _edad) public {\r\n        alumnos.push(Alumno(_codigo, _nombre, _edad));\r\n    }\r\n\r\n    // Se puede devolver más de un resultado\r\n    function mostrarAlumnoV1(uint256 _indice) public view returns(uint256 Codigo, string memory Nombre) {\r\n        return(alumnos[_indice].codigo, alumnos[_indice].nombre);\r\n    }\r\n\r\n    function mostrarAlumnoV2(uint256 _indice) public view returns(uint256 Codigo, string memory Nombre, uint256 Edad) {\r\n        Alumno memory al = alumnos[_indice];\r\n        return(al.codigo, al.nombre, al.edad);\r\n    }\r\n\r\n    function mostrarAlumnoV3(uint256 _indice) public view returns(Alumno memory alumno) {\r\n        require(_indice < alumnos.length, \"Posicion Incorrecta\");\r\n        Alumno memory al = alumnos[_indice];\r\n        return(al);\r\n    }\r\n\r\n    function buscarAlumno(uint256 _codigo) public view returns(uint256 Codigo, string memory Nombre, uint256 Edad) {\r\n        uint256 indice = 0;\r\n        \r\n        for(uint i=0; i < alumnos.length; i++) {\r\n            Alumno memory al = alumnos[i];\r\n            \r\n            if(al.codigo == _codigo) {\r\n                indice = i;\r\n            }\r\n        }\r\n        \r\n        Alumno memory alumno = alumnos[indice];\r\n        return(alumno.codigo, alumno.nombre, alumno.edad);\r\n    }\r\n    function cambiarEdadAlumno(uint256 _codigo) public {\r\n        \r\n        for(uint i=0; i < alumnos.length; i++) {\r\n            Alumno storage al = alumnos[i];\r\n\r\n            if(al.codigo == _codigo) {\r\n                al.edad = al.edad + 1;\r\n            }\r\n        }\r\n       \r\n    }\r\n}",
+        "file": "contracts/15_Complejos_Struct.sol"
+      }
+    }
+  },
+  "contracts/16_Complejos_Mapping.sol": {
+    "__sources__": {
+      "contracts/16_Complejos_Mapping.sol": {
+        "content": "// SPDX-License-Identifier: GPL-3.0\r\npragma solidity >=0.8.2 <0.9.0;\r\n\r\ncontract ComplejosMapping {\r\n\r\n    struct Alumno {\r\n        uint256 codigo;\r\n        string nombre;\r\n        uint256 edad;\r\n    }\r\n\r\n    mapping(uint256 => Alumno) public alumnos;\r\n\r\n    mapping(address => uint256) public saldoCuentas;\r\n\r\n    function agregarAlumno(uint256 _codigo, string memory _nombre, uint256 _edad) public {\r\n        //alumnos.push(Alumno(_codigo, _nombre, _edad));\r\n        alumnos[_codigo] = Alumno(_codigo, _nombre, _edad);\r\n    }\r\n\r\n    function asignarmeSoles(uint256 _monto) public {\r\n        saldoCuentas[msg.sender] = _monto;\r\n    }\r\n\r\n}",
+        "file": "contracts/16_Complejos_Mapping.sol"
+      }
+    }
   }
 }
