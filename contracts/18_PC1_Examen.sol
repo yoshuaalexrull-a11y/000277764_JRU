@@ -3,11 +3,13 @@ pragma solidity 0.8.1;
 
 contract Biblioteca277764 {
     
+    
     struct Libro {
         uint256 id;
         string titulo;
         uint256 anio;
         string genero;
+        bool estado; 
     }
     
     Libro[] public libros;
@@ -20,18 +22,25 @@ contract Biblioteca277764 {
     }
 
     
-    function agregarElemento(uint256 _id, string memory _titulo, uint256 _anio, string memory _genero) public {
+    function agregarElemento(uint256 _id, string memory _titulo, uint256 _anio, string memory _genero, bool _estado) public {
         require(_id % 2 == 0, "No se permiten id impares");
-        libros.push(Libro(_id, _titulo, _anio, _genero));
+        libros.push(Libro(_id, _titulo, _anio, _genero, _estado));
     }
 
-    
     function contarElementos() public view returns (uint256) {
         return libros.length;
     }
 
-    
     function cambiarDireccion(address _nuevaDireccion) public {
         direccion = _nuevaDireccion;
+    }
+
+    
+    function inactivarEstado(uint256 _id) public {
+        for(uint i = 0; i < libros.length; i++) {
+            if(libros[i].id == _id) {
+                libros[i].estado = false;
+            }
+        }
     }
 }
